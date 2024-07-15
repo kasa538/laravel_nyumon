@@ -10,12 +10,16 @@ class HelloController extends Controller
 {
     public function index(Request $request)
     {
-        return view('hello.index');
+        return view('hello.index',['msg'=>'フォームを入力：']);
     }
 
     public function post(Request $request)
     {
-        return view('hello.index',['msg'=>$request->msg]);
-
+        $validated = $request->validate([
+            'name' => 'required',
+            'mail' => 'email',
+            'age' => 'numeric|between:0,150',
+        ]);
+        return view('hello.index',['msg'=>'正しく入力されました！']);
     }
 }
